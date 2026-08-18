@@ -1,0 +1,62 @@
+name: Redis integration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/redis-integration.yml"
+      - "translation_core/pi_agent/**"
+  pull_request:
+    paths:
+      - ".github/workflows/redis-integration.yml"
+      - "translation_core/pi_agent/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: redis-integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  redis-integration:
+    name: Redis and BullMQ reliability
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      redis:
+        image: redis:7.4.10-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 2s
+          --health-timeout 2s
+          --health-retries 20
+    env:
+      REDIS_INTEGRATION_URL: redis://127.0.0.1:6379/15
+    defaults:
+      run:
+        working-directory: translation_core/pi_agent
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@e51e5fe84fc33b4c73ebe40526b2694712b5b858
+        with:
+          node-version: 22.19.0
+          cache: npm
+          cache-dependency-path: translation_core/pi_agent/package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Compile TypeScript
+        run: npm run build
+
+      - name: Exercise real Redis and BullMQ behavior
+        run: npx vitest run test/redis-integration.test.ts --reporter=verbose

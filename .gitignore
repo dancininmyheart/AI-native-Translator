@@ -41,6 +41,7 @@
 **/.codegraph/
 **/.omo/
 /.public-snapshot-*/
+/PROJECT_RESUME_INTERVIEW.md
 
 # Generated jobs, validation corpora, and release bundles
 /output/

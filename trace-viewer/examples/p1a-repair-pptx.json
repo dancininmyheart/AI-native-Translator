@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "trace_id": "p1a-repair-pptx",
+  "generated_at": "2026-08-18T00:00:00.000Z",
+  "document": {
+    "format": "pptx"
+  },
+  "evidence": {
+    "kind": "scripted_fixture_candidate",
+    "pi_session": false,
+    "model_calls": 0,
+    "ordering": "within_stream"
+  },
+  "terminal": {
+    "status": "COMPLETED",
+    "result_http_status": 200,
+    "reason_code": null
+  },
+  "states": [
+    {
+      "sequence": 0,
+      "status": "PREFLIGHT",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 1,
+      "status": "QA",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 2,
+      "status": "REPAIRING",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 3,
+      "status": "QA",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 4,
+      "status": "VERIFYING",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 5,
+      "status": "QA",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 6,
+      "status": "COMPLETED",
+      "elapsed_ms": null
+    }
+  ],
+  "tool_calls": [
+    {
+      "sequence": 0,
+      "tool": "preflight_document",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 1,
+      "tool": "run_document_qa",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 2,
+      "tool": "apply_repair",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 3,
+      "tool": "run_document_qa",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 4,
+      "tool": "verify_candidate",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 5,
+      "tool": "finalize_result",
+      "outcome": "recorded",
+      "duration_ms": null
+    }
+  ],
+  "qa_snapshots": [
+    {
+      "sequence": 0,
+      "blocking_count": 2,
+      "quality_score": 80,
+      "issue_counts": null
+    },
+    {
+      "sequence": 1,
+      "blocking_count": 0,
+      "quality_score": 100,
+      "issue_counts": null
+    }
+  ],
+  "candidates": [
+    {
+      "sequence": 0,
+      "candidate_id": "candidate-r1",
+      "sha256": "d1264225654c4b5c6e2e05b2cc9b5daef350c06d1f5afa0b89379ec5db255b07",
+      "selected": true,
+      "released": true
+    }
+  ],
+  "usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null,
+    "cost_usd": null,
+    "latency_ms": 24407
+  }
+}

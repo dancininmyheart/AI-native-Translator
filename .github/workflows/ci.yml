@@ -110,6 +110,51 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: Run public 20-case policy evaluation
+        run: npm run eval:public
+
+      - name: Verify generated evaluation reports
+        run: >-
+          node --input-type=module -e
+          "import assert from 'node:assert/strict'; import { readFile } from 'node:fs/promises';
+          const root = '../tmp/public-agent-eval';
+          const summaryText = await readFile(root + '/eval-summary.json', 'utf8');
+          const summary = JSON.parse(summaryText);
+          const report = await readFile(root + '/eval-report.md', 'utf8');
+          const index = JSON.parse(await readFile(root + '/corpus/fixture-index.json', 'utf8'));
+          const baselineSummary = await readFile('../../evals/baselines/v1.0.0/eval-summary.json', 'utf8');
+          const baselineReport = await readFile('../../evals/baselines/v1.0.0/eval-report.md', 'utf8');
+          assert.equal(summary.model_calls, 0);
+          assert.equal(summary.evidence_boundary.evaluation_scope, 'offline_orchestration_policy_replay');
+          assert.equal(summary.evidence_boundary.pi_session, false);
+          assert.equal(summary.evidence_boundary.native_model_eval, false);
+          assert.equal(summary.evidence_boundary.corpus_provenance, 'synthetic_cc0');
+          assert.equal(summary.evidence_boundary.qa_annotations, 'frozen_synthetic');
+          assert.equal(summary.evidence_boundary.office_artifacts, 'runtime_generated_carriers');
+          assert.equal(summary.evidence_boundary.replay_latency, 'deterministic_fixture_value_not_wall_clock');
+          assert.equal(summary.strategies.length, 3);
+          for (const strategy of summary.strategies) assert.equal(strategy.metrics.scenario_count, 20);
+          assert.match(report, /model_calls=0/);
+          assert.equal(index.license, 'CC0-1.0');
+          assert.equal(index.model_calls, 0);
+          assert.equal(summary.corpus_manifest_sha256, index.manifest_sha256);
+          assert.equal(summaryText, baselineSummary);
+          assert.equal(report, baselineReport);
+          console.log('VERIFIED eval-summary.json, eval-report.md, and corpus/fixture-index.json');"
+
+      - name: Export sanitized P1-A traces
+        run: npm run trace:export:p1a
+
+      - name: Validate and replay public trace schema
+        run: |
+          node dist/src/public-trace-cli.js validate ../tmp/p1a-public-traces/p1a-direct-docx.json
+          node dist/src/public-trace-cli.js validate ../tmp/p1a-public-traces/p1a-repair-pptx.json
+          node dist/src/public-trace-cli.js validate ../tmp/p1a-public-traces/p1a-high-risk-pptx.json
+          node dist/src/public-trace-cli.js replay ../tmp/p1a-public-traces/p1a-high-risk-pptx.json
+
+      - name: Test static trace viewer
+        run: node --test ../../trace-viewer/test/viewer.test.mjs
+
       - name: Audit all dependencies
         run: npm audit --audit-level=high --registry=https://registry.npmjs.org/
 

@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "trace_id": "p1a-direct-docx",
+  "generated_at": "2026-08-18T00:00:00.000Z",
+  "document": {
+    "format": "docx"
+  },
+  "evidence": {
+    "kind": "real_python_core",
+    "pi_session": false,
+    "model_calls": 0,
+    "ordering": "within_stream"
+  },
+  "terminal": {
+    "status": "COMPLETED",
+    "result_http_status": 200,
+    "reason_code": null
+  },
+  "states": [
+    {
+      "sequence": 0,
+      "status": "PREFLIGHT",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 1,
+      "status": "TRANSLATING",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 2,
+      "status": "QA",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 3,
+      "status": "VERIFYING",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 4,
+      "status": "QA",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 5,
+      "status": "COMPLETED",
+      "elapsed_ms": null
+    }
+  ],
+  "tool_calls": [
+    {
+      "sequence": 0,
+      "tool": "preflight_document",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 1,
+      "tool": "translate_once",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 2,
+      "tool": "run_document_qa",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 3,
+      "tool": "verify_candidate",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 4,
+      "tool": "finalize_result",
+      "outcome": "recorded",
+      "duration_ms": null
+    }
+  ],
+  "qa_snapshots": [
+    {
+      "sequence": 0,
+      "blocking_count": 0,
+      "quality_score": 100,
+      "issue_counts": null
+    }
+  ],
+  "candidates": [
+    {
+      "sequence": 0,
+      "candidate_id": "candidate-r0",
+      "sha256": "14d4a537f6b6c391d003867b7a5e5dd714580b5d2dfc704193e0ad3f092eabac",
+      "selected": true,
+      "released": true
+    }
+  ],
+  "usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null,
+    "cost_usd": null,
+    "latency_ms": 4140
+  }
+}

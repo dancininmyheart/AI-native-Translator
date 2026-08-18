@@ -9,6 +9,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "demo:p1a": "npm run build && node dist/src/p1a-demo-cli.js",
+    "eval:public": "npm run build && node dist/src/eval-cli.js",
+    "trace:export:p1a": "npm run demo:p1a && node dist/src/public-trace-cli.js project-p1a ../tmp/p1a-demo/demo-trace.json ../tmp/p1a-public-traces",
+    "trace:replay": "npm run build && node dist/src/public-trace-cli.js replay",
+    "trace:validate": "npm run build && node dist/src/public-trace-cli.js validate",
+    "trace:viewer": "node ../../trace-viewer/serve.mjs",
     "start": "node dist/src/main.js",
     "dev": "tsx watch src/main.ts",
     "test": "vitest run test",

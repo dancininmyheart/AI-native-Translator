@@ -1,0 +1,613 @@
+{
+  "schema_version": 1,
+  "corpus_id": "officeguard-public-policy-eval",
+  "corpus_version": "1.0.0",
+  "evaluation_scope": "offline_orchestration_policy_replay",
+  "generated_by": "translation_core/tools/eval_public_corpus.py",
+  "license": "CC0-1.0",
+  "pi_session": false,
+  "model_calls": 0,
+  "native_office_qa": false,
+  "qa_annotations": "frozen_synthetic",
+  "office_artifacts": "runtime_generated_carriers",
+  "replay_latency": "deterministic_fixture_value_not_wall_clock",
+  "scenarios": [
+    {
+      "scenario_id": "early-pass-then-regression-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/early-pass-then-regression-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": {
+        "kind": "synthetic",
+        "license": "CC0-1.0"
+      },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/early-pass-then-regression-pptx/candidate-r0.pptx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 8
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/early-pass-then-regression-pptx/candidate-r1.pptx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/early-pass-then-regression-pptx/candidate-r2.pptx",
+          "blocking_count": 3,
+          "new_regressions": 3,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 6
+        }
+      ]
+    },
+    {
+      "scenario_id": "direct-safe-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/direct-safe-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": {
+        "kind": "synthetic",
+        "license": "CC0-1.0"
+      },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/direct-safe-docx/candidate-r0.docx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 4
+        }
+      ]
+    },
+    {
+      "scenario_id": "gradual-safe-repair-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/gradual-safe-repair-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": {
+        "kind": "synthetic",
+        "license": "CC0-1.0"
+      },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/gradual-safe-repair-pptx/candidate-r0.pptx",
+          "blocking_count": 3,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 9
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/gradual-safe-repair-pptx/candidate-r1.pptx",
+          "blocking_count": 1,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 7
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/gradual-safe-repair-pptx/candidate-r2.pptx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 6
+        }
+      ]
+    },
+    {
+      "scenario_id": "irreducible-risk-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/irreducible-risk-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": {
+        "kind": "synthetic",
+        "license": "CC0-1.0"
+      },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/irreducible-risk-pptx/candidate-r0.pptx",
+          "blocking_count": 3,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 10
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/irreducible-risk-pptx/candidate-r1.pptx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 8
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/irreducible-risk-pptx/candidate-r2.pptx",
+          "blocking_count": 1,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 7
+        }
+      ]
+    },
+    {
+      "scenario_id": "regression-guard-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/regression-guard-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": {
+        "kind": "synthetic",
+        "license": "CC0-1.0"
+      },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/regression-guard-docx/candidate-r0.docx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 7
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/regression-guard-docx/candidate-r1.docx",
+          "blocking_count": 3,
+          "new_regressions": 2,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 6
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/regression-guard-docx/candidate-r2.docx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "qa-false-negative-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/qa-false-negative-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": {
+        "kind": "synthetic",
+        "license": "CC0-1.0"
+      },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/qa-false-negative-docx/candidate-r0.docx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "one-round-repair-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/one-round-repair-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": {
+        "kind": "synthetic",
+        "license": "CC0-1.0"
+      },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/one-round-repair-docx/candidate-r0.docx",
+          "blocking_count": 1,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 6
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/one-round-repair-docx/candidate-r1.docx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 4
+        }
+      ]
+    },
+    {
+      "scenario_id": "direct-safe-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/direct-safe-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/direct-safe-pptx/candidate-r0.pptx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "direct-layout-risk-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/direct-layout-risk-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/direct-layout-risk-pptx/candidate-r0.pptx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 8
+        }
+      ]
+    },
+    {
+      "scenario_id": "direct-semantic-risk-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/direct-semantic-risk-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/direct-semantic-risk-docx/candidate-r0.docx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 7
+        }
+      ]
+    },
+    {
+      "scenario_id": "single-improvement-still-blocked-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/single-improvement-still-blocked-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/single-improvement-still-blocked-docx/candidate-r0.docx",
+          "blocking_count": 3,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 8
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/single-improvement-still-blocked-docx/candidate-r1.docx",
+          "blocking_count": 1,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "single-safe-repair-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/single-safe-repair-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/single-safe-repair-pptx/candidate-r0.pptx",
+          "blocking_count": 1,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 7
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/single-safe-repair-pptx/candidate-r1.pptx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "two-round-semantic-repair-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/two-round-semantic-repair-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/two-round-semantic-repair-docx/candidate-r0.docx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 9
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/two-round-semantic-repair-docx/candidate-r1.docx",
+          "blocking_count": 1,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 6
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/two-round-semantic-repair-docx/candidate-r2.docx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "two-round-layout-repair-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/two-round-layout-repair-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/two-round-layout-repair-pptx/candidate-r0.pptx",
+          "blocking_count": 4,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 11
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/two-round-layout-repair-pptx/candidate-r1.pptx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 8
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/two-round-layout-repair-pptx/candidate-r2.pptx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 6
+        }
+      ]
+    },
+    {
+      "scenario_id": "late-regression-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/late-regression-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/late-regression-pptx/candidate-r0.pptx",
+          "blocking_count": 3,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 10
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/late-regression-pptx/candidate-r1.pptx",
+          "blocking_count": 1,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 7
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/late-regression-pptx/candidate-r2.pptx",
+          "blocking_count": 0,
+          "new_regressions": 1,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 6
+        }
+      ]
+    },
+    {
+      "scenario_id": "no-improvement-stop-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/no-improvement-stop-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/no-improvement-stop-docx/candidate-r0.docx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 8
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/no-improvement-stop-docx/candidate-r1.docx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 6
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/no-improvement-stop-docx/candidate-r2.docx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "worsening-stop-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/worsening-stop-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/worsening-stop-pptx/candidate-r0.pptx",
+          "blocking_count": 1,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 7
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/worsening-stop-pptx/candidate-r1.pptx",
+          "blocking_count": 3,
+          "new_regressions": 2,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 7
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/worsening-stop-pptx/candidate-r2.pptx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "false-negative-after-repair-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/false-negative-after-repair-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/false-negative-after-repair-docx/candidate-r0.docx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 8
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/false-negative-after-repair-docx/candidate-r1.docx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 5
+        }
+      ]
+    },
+    {
+      "scenario_id": "false-negative-layout-pptx",
+      "document_format": "pptx",
+      "source_relpath": "fixtures/false-negative-layout-pptx/source.pptx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/false-negative-layout-pptx/candidate-r0.pptx",
+          "blocking_count": 0,
+          "new_regressions": 0,
+          "oracle_semantic_pass": true,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 6
+        }
+      ]
+    },
+    {
+      "scenario_id": "budget-exhausted-docx",
+      "document_format": "docx",
+      "source_relpath": "fixtures/budget-exhausted-docx/source.docx",
+      "max_repair_rounds": 2,
+      "provenance": { "kind": "synthetic", "license": "CC0-1.0" },
+      "rounds": [
+        {
+          "candidate_id": "candidate-r0",
+          "candidate_relpath": "fixtures/budget-exhausted-docx/candidate-r0.docx",
+          "blocking_count": 4,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": false,
+          "replay_latency_ms": 10
+        },
+        {
+          "candidate_id": "candidate-r1",
+          "candidate_relpath": "fixtures/budget-exhausted-docx/candidate-r1.docx",
+          "blocking_count": 3,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 7
+        },
+        {
+          "candidate_id": "candidate-r2",
+          "candidate_relpath": "fixtures/budget-exhausted-docx/candidate-r2.docx",
+          "blocking_count": 2,
+          "new_regressions": 0,
+          "oracle_semantic_pass": false,
+          "oracle_layout_pass": true,
+          "replay_latency_ms": 6
+        }
+      ]
+    }
+  ]
+}

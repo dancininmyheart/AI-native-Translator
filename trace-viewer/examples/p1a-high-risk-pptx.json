@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "trace_id": "p1a-high-risk-pptx",
+  "generated_at": "2026-08-18T00:00:00.000Z",
+  "document": {
+    "format": "pptx"
+  },
+  "evidence": {
+    "kind": "scripted_fixture_candidate",
+    "pi_session": false,
+    "model_calls": 0,
+    "ordering": "within_stream"
+  },
+  "terminal": {
+    "status": "NEEDS_REVIEW",
+    "result_http_status": 409,
+    "reason_code": "budget_exhausted"
+  },
+  "states": [
+    {
+      "sequence": 0,
+      "status": "PREFLIGHT",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 1,
+      "status": "QA",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 2,
+      "status": "REPAIRING",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 3,
+      "status": "QA",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 4,
+      "status": "REPAIRING",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 5,
+      "status": "QA",
+      "elapsed_ms": null
+    },
+    {
+      "sequence": 6,
+      "status": "NEEDS_REVIEW",
+      "elapsed_ms": null
+    }
+  ],
+  "tool_calls": [
+    {
+      "sequence": 0,
+      "tool": "preflight_document",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 1,
+      "tool": "run_document_qa",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 2,
+      "tool": "apply_repair",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 3,
+      "tool": "run_document_qa",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 4,
+      "tool": "apply_repair",
+      "outcome": "recorded",
+      "duration_ms": null
+    },
+    {
+      "sequence": 5,
+      "tool": "run_document_qa",
+      "outcome": "recorded",
+      "duration_ms": null
+    }
+  ],
+  "qa_snapshots": [
+    {
+      "sequence": 0,
+      "blocking_count": 3,
+      "quality_score": 70,
+      "issue_counts": null
+    },
+    {
+      "sequence": 1,
+      "blocking_count": 2,
+      "quality_score": 80,
+      "issue_counts": null
+    },
+    {
+      "sequence": 2,
+      "blocking_count": 1,
+      "quality_score": 90,
+      "issue_counts": null
+    }
+  ],
+  "candidates": [
+    {
+      "sequence": 0,
+      "candidate_id": "candidate-r2",
+      "sha256": "631e3c04bbcb148cfb99e77936fca6eded184765d444d54ef88fc41089a212a4",
+      "selected": true,
+      "released": false
+    }
+  ],
+  "usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null,
+    "cost_usd": null,
+    "latency_ms": 22488
+  }
+}

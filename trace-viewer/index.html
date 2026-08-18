@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="A local, read-only viewer for sanitized OfficeGuard Agent trace schema v1 artifacts.">
+  <title>OfficeGuard Agent — Trace Viewer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#trace-root">Skip to trace</a>
+  <header class="hero">
+    <div class="hero__eyebrow">OfficeGuard Agent / Public Evidence</div>
+    <h1>Trace Viewer</h1>
+    <p class="hero__lead">Inspect bounded state, tool, QA, candidate, and release evidence without exposing document text or model prompts.</p>
+    <div class="disclosure" role="note">
+      <strong>Evidence boundary:</strong> bundled samples are offline replays with
+      <code>pi_session=false</code> and <code>model_calls=0</code>. “Not recorded” means the metric is absent; it is never estimated.
+    </div>
+  </header>
+
+  <section class="loader" aria-labelledby="loader-title">
+    <div>
+      <p class="section-kicker">Trace source</p>
+      <h2 id="loader-title">Choose bounded evidence</h2>
+    </div>
+    <div class="loader__controls">
+      <div class="field field--grow">
+        <label for="example-select">Bundled sample</label>
+        <select id="example-select">
+          <option value="p1a-direct-docx.json">Direct DOCX — released</option>
+          <option value="p1a-repair-pptx.json">Repaired PPTX — released</option>
+          <option value="p1a-high-risk-pptx.json">High-risk PPTX — review required</option>
+        </select>
+      </div>
+      <button class="button" id="load-example" type="button">Load sample</button>
+      <span class="or" aria-hidden="true">or</span>
+      <div class="field field--file">
+        <label for="trace-file">Open local schema-v1 JSON</label>
+        <input id="trace-file" type="file" accept="application/json,.json">
+      </div>
+    </div>
+    <p id="load-status" class="load-status" aria-live="polite"></p>
+  </section>
+
+  <main id="trace-root" class="trace-root" aria-live="off"></main>
+
+  <footer>
+    Read-only static viewer · no uploads · no third-party scripts · schema version 1
+  </footer>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

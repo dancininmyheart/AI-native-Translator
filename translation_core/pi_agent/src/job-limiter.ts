@@ -14,12 +14,12 @@ export interface ActiveJobLimiter {
   close(): Promise<void>;
 }
 
-const NEVER_LOST_SIGNAL = new AbortController().signal;
-
 export class NoopActiveJobLimiter implements ActiveJobLimiter {
   async acquire(_jobId: string, _signal?: AbortSignal): Promise<ActiveJobLease> {
     return {
-      lostSignal: NEVER_LOST_SIGNAL,
+      // Keep the lease lifecycle local even though fixture leases are never
+      // lost. A shared signal accumulates one listener per concurrent runner.
+      lostSignal: new AbortController().signal,
       release: async () => undefined,
     };
   }

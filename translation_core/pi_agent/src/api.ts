@@ -23,11 +23,18 @@ export interface ApiDependencies {
   runner: AgentJobRunner;
   storage: StorageService;
   readiness?: () => Promise<void>;
+  /** Disable request logging at deterministic test composition boundaries. */
+  logger?: false;
 }
+
+export const API_LOG_REDACT_PATHS = ["req.headers.authorization", "req.body"] as const;
 
 export async function buildApi(deps: ApiDependencies): Promise<FastifyInstance> {
   const { config, registry, queue, runner, storage } = deps;
-  const app = Fastify({ logger: { redact: ["req.headers.authorization", "req.body"] }, bodyLimit: config.maxInputBytes });
+  const logger = deps.logger === false || config.fixtureMode
+    ? false
+    : { redact: [...API_LOG_REDACT_PATHS] };
+  const app = Fastify({ logger, bodyLimit: config.maxInputBytes });
   await app.register(multipart, {
     limits: { files: 1, fileSize: config.maxInputBytes, fields: 4, parts: 5 },
   });

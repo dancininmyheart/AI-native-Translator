@@ -86,6 +86,8 @@ it("injects only the controlled skill/tools and writes no API key to models.json
       execute: async () => ({ content: [{ type: "text", text: "ok" }], details: {} }),
     });
     const handle = await factory.create(path.join(config.dataRoot, "job"), [statusTool]);
+    expect(handle.session.model).toMatchObject({ provider: config.piModelProvider, id: "test-model" });
+    expect(await handle.session.modelRuntime.checkAuth(config.piModelProvider)).toMatchObject({ type: "api_key" });
     expect(handle.session.getActiveToolNames()).toEqual(["status_only"]);
     const skills = handle.session.resourceLoader.getSkills().skills;
     expect(skills.map((skill) => skill.name)).toEqual(["document-translation"]);
@@ -120,6 +122,57 @@ it("adds the conventional v1 path for a provider origin", async () => {
     const models = JSON.parse(await readFile(path.join(config.piAgentDir, "models.json"), "utf8"));
     expect(models.providers[config.piModelProvider].baseUrl).toBe("https://models.example.test/v1");
   } finally {
+    if (previousKey === undefined) delete process.env.OPENAI_API_KEY;
+    else process.env.OPENAI_API_KEY = previousKey;
+  }
+});
+
+it("fails readiness when the selected provider has no configured credential", async () => {
+  const previousKey = process.env.OPENAI_API_KEY;
+  delete process.env.OPENAI_API_KEY;
+  try {
+    const config = await testConfig({
+      fixtureMode: false,
+      openaiBaseUrl: "https://models.example.test/v1",
+      openaiModel: "test-model",
+      piModelId: "test-model",
+    });
+    cleanup.push(config.dataRoot);
+
+    const factory = new PiSessionFactory(config);
+    await expect(factory.probe()).rejects.toThrow(/provider authentication is not configured/i);
+    await expect(factory.probe()).rejects.toThrow(/provider authentication is not configured/i);
+  } finally {
+    if (previousKey === undefined) delete process.env.OPENAI_API_KEY;
+    else process.env.OPENAI_API_KEY = previousKey;
+  }
+});
+
+it("initializes the controlled provider without probing unrelated built-in providers", async () => {
+  const previousKey = process.env.OPENAI_API_KEY;
+  process.env.OPENAI_API_KEY = "test-secret";
+  const warnings: Error[] = [];
+  const onWarning = (warning: Error) => warnings.push(warning);
+  process.on("warning", onWarning);
+  try {
+    const config = await testConfig({
+      fixtureMode: false,
+      openaiBaseUrl: "https://models.example.test/v1",
+      openaiModel: "test-model",
+      piModelId: "test-model",
+    });
+    cleanup.push(config.dataRoot);
+
+    await new PiSessionFactory(config).probe();
+    await new Promise<void>((resolve) => setImmediate(resolve));
+
+    expect(
+      warnings.filter((warning) =>
+        warning.name === "MaxListenersExceededWarning" && /abort listeners.*AbortSignal/i.test(warning.message)
+      ),
+    ).toEqual([]);
+  } finally {
+    process.off("warning", onWarning);
     if (previousKey === undefined) delete process.env.OPENAI_API_KEY;
     else process.env.OPENAI_API_KEY = previousKey;
   }

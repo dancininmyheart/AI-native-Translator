@@ -108,6 +108,7 @@ export class PiSessionFactory implements SessionFactory {
 
   async probe(): Promise<void> {
     await this.initialize();
+    await this.assertConfiguredProviderAuth();
   }
 
   private async initialize(): Promise<void> {
@@ -162,6 +163,10 @@ export class PiSessionFactory implements SessionFactory {
       modelsPath,
       authPath: path.join(this.config.piAgentDir, "auth.json"),
       allowModelNetwork: false,
+      // This sidecar selects one controlled static model below. A global
+      // availability refresh only probes unrelated built-in providers and
+      // fans their auth checks out over one shared AbortSignal.
+      refreshOnCreate: false,
     });
     this.model = this.modelRuntime.getModel(this.config.piModelProvider, modelId);
     if (!this.model) {
@@ -169,8 +174,15 @@ export class PiSessionFactory implements SessionFactory {
     }
   }
 
+  private async assertConfiguredProviderAuth(): Promise<void> {
+    if (!this.modelRuntime || !this.model) throw new Error("Pi model runtime is not initialized");
+    const providerAuth = await this.modelRuntime.checkAuth(this.config.piModelProvider);
+    if (!providerAuth) throw new Error(`Pi provider authentication is not configured: ${this.config.piModelProvider}`);
+  }
+
   async create(jobCwd: string, tools: ToolDefinition[]): Promise<PiSessionHandle> {
     await this.initialize();
+    await this.assertConfiguredProviderAuth();
     if (!this.compiledSkillPath) throw new Error("compiled document-translation Skill is unavailable");
     const skill: Skill = {
       name: "document-translation",
