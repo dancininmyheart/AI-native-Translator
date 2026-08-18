@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Python portable fixtures
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: translation_core
+    env:
+      FORMAT_TRANSLATOR_PPTX_LAYOUT_BACKEND: disabled
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUTF8: "1"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: 0.9.25
+          enable-cache: true
+          cache-dependency-glob: translation_core/uv.lock
+
+      - name: Install Python
+        run: uv python install 3.12
+
+      - name: Sync locked dependencies
+        run: uv sync --frozen --extra dev --python 3.12
+
+      - name: Lint
+        run: uv run --frozen --extra dev ruff check src tests tools
+
+      - name: Test
+        run: uv run --frozen --extra dev pytest -m "not office_integration"
+
+      - name: Verify reproducible release package
+        shell: pwsh
+        run: |
+          ./deploy/package-pi-agent-release.ps1 -ReleaseTag ci-repeat-a
+          ./deploy/package-pi-agent-release.ps1 -ReleaseTag ci-repeat-b
+          $first = (Get-FileHash -Algorithm SHA256 -LiteralPath release/format-translator-pi-agent-linux-ci-repeat-a.tar.gz).Hash
+          $second = (Get-FileHash -Algorithm SHA256 -LiteralPath release/format-translator-pi-agent-linux-ci-repeat-b.tar.gz).Hash
+          if ($first -ne $second) {
+            throw "Identical Git index trees produced different release archives."
+          }
+
+  sidecar:
+    name: Pi Agent portable fixtures
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      FORMAT_TRANSLATOR_PPTX_LAYOUT_BACKEND: disabled
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUTF8: "1"
+    defaults:
+      run:
+        working-directory: translation_core/pi_agent
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Node.js
+        # Patched post-v7 commit rebuilding dist for GHSA-3jxr-9vmj-r5cp (#1599).
+        uses: actions/setup-node@e51e5fe84fc33b4c73ebe40526b2694712b5b858
+        with:
+          node-version: 22.19.0
+          cache: npm
+          cache-dependency-path: translation_core/pi_agent/package-lock.json
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: 0.9.25
+          enable-cache: true
+          cache-dependency-glob: translation_core/uv.lock
+
+      - name: Install Python
+        run: uv python install 3.12
+        working-directory: translation_core
+
+      - name: Sync Python Core
+        run: uv sync --frozen --extra dev --python 3.12
+        working-directory: translation_core
+
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Compile TypeScript
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+      - name: Audit all dependencies
+        run: npm audit --audit-level=high --registry=https://registry.npmjs.org/
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high --registry=https://registry.npmjs.org/

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pi Office Translation"
+  short_description: "Office translation with P0/P1 convergence"
+  default_prompt: "Use $document-translation to translate or validate this Word or PowerPoint file, drive P0/P1 through bounded repair, and return either the verified deliverable or the best current full-QA Office candidate with auditable evidence."

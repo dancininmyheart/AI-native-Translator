@@ -1,0 +1,100 @@
+# syntax=docker/dockerfile:1.7
+
+ARG NODE_VERSION=22.19.0
+
+FROM python:3.12-slim-bookworm AS python-wheel
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /build/translation_core
+COPY translation_core/pyproject.toml translation_core/README.md ./
+COPY translation_core/src ./src
+RUN python -m pip install "build>=1.2,<2" \
+    && python -m build --wheel --outdir /wheel
+
+
+FROM node:${NODE_VERSION}-bookworm-slim AS pi-builder
+
+ENV NODE_ENV=development \
+    NPM_CONFIG_UPDATE_NOTIFIER=false
+
+WORKDIR /build/pi_agent
+COPY translation_core/pi_agent/package*.json ./
+RUN npm ci --ignore-scripts
+COPY translation_core/pi_agent/ ./
+RUN npm run build \
+    && npm prune --omit=dev
+
+
+FROM node:${NODE_VERSION}-bookworm-slim AS runtime
+
+ENV NODE_ENV=production \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PATH=/opt/format-translator/venv/bin:$PATH \
+    DOCUMENT_TRANSLATION_SKILL_DIR=/opt/format-translator/skills/document-translation \
+    PI_AGENT_DATA_ROOT=/data \
+    PI_AGENT_JOBS_ROOT=/data/jobs \
+    PI_AGENT_UPLOADS_ROOT=/data/uploads \
+    PI_AGENT_CONFIG_DIR=/data/pi-config \
+    FORMAT_TRANSLATOR_JOB_ROOT=/data/jobs \
+    FORMAT_TRANSLATOR_PPTX_LAYOUT_BACKEND=libreoffice \
+    FORMAT_TRANSLATOR_SOFFICE_PATH=/usr/bin/libreoffice \
+    FORMAT_TRANSLATOR_LIBREOFFICE_MAX_WORKERS=3 \
+    FORMAT_TRANSLATOR_LIBREOFFICE_QUEUE_TIMEOUT_SECONDS=120 \
+    FORMAT_TRANSLATOR_LIBREOFFICE_TIMEOUT_SECONDS=120 \
+    FORMAT_TRANSLATOR_LIBREOFFICE_LOCK_DIRECTORY=/var/lock/format-translator/libreoffice \
+    SAL_USE_VCLPLUGIN=svp \
+    HOME=/home/format-translator
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        fontconfig \
+        fonts-liberation2 \
+        fonts-noto-cjk \
+        fonts-noto-core \
+        libreoffice-core \
+        libreoffice-impress \
+        libreoffice-writer \
+        python3 \
+        python3-venv \
+        tini \
+    && rm -rf /var/lib/apt/lists/* \
+    && fc-cache -f
+
+COPY --from=python-wheel /wheel /tmp/wheels
+RUN python3 -m venv /opt/format-translator/venv \
+    && /opt/format-translator/venv/bin/pip install /tmp/wheels/*.whl \
+    && rm -rf /tmp/wheels
+
+WORKDIR /opt/format-translator/pi_agent
+COPY --from=pi-builder /build/pi_agent/package*.json ./
+COPY --from=pi-builder /build/pi_agent/node_modules ./node_modules
+COPY --from=pi-builder /build/pi_agent/dist ./dist
+COPY document-translation /opt/format-translator/skills/document-translation
+COPY translation_core/deploy/linux/healthcheck.mjs /opt/format-translator/healthcheck.mjs
+
+RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin format-translator \
+    && mkdir -p \
+        /data/jobs \
+        /data/uploads \
+        /data/pi-config \
+        /var/lock/format-translator/libreoffice \
+        /home/format-translator/.cache \
+    && chown -R format-translator:format-translator \
+        /data \
+        /var/lock/format-translator \
+        /home/format-translator \
+        /opt/format-translator/pi_agent
+
+USER 10001:10001
+VOLUME ["/data", "/var/lock/format-translator"]
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD ["node", "/opt/format-translator/healthcheck.mjs"]
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["node", "dist/src/main.js"]

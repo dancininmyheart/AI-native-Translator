@@ -1,0 +1,79 @@
+# Secrets and machine-local configuration
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+**/*.pem
+**/*.key
+**/id_rsa*
+**/id_ed25519*
+**/*.p12
+**/*.pfx
+**/*.jks
+**/*.keystore
+**/*.kdbx
+**/.npmrc
+**/.pypirc
+**/credentials.json
+**/service-account*.json
+
+# Python
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.pytest-*/
+**/.pytest-tmp*/
+**/.ruff_cache/
+**/.mypy_cache/
+**/.pyright/
+**/.coverage
+**/htmlcov/
+**/*.egg-info/
+
+# Node / TypeScript
+**/node_modules/
+**/dist/
+**/coverage/
+**/*.tsbuildinfo
+
+# Local agent and indexing state
+**/.codegraph/
+**/.omo/
+/.public-snapshot-*/
+
+# Generated jobs, validation corpora, and release bundles
+/output/
+/normalized/
+/tmp/
+/translation_core/tmp/
+/translation_core/.validation/
+/translation_core/release/
+/translation_core/var/
+/translation_core/pi_agent/var/
+
+# Private source and translated documents currently stored at repository root
+/*.doc
+/*.docx
+/*.ppt
+/*.pptx
+/*.pdf
+/*.xls
+/*.xlsx
+/*.odt
+/*.ods
+/*.odp
+/*.rtf
+/*.zip
+/*.7z
+/*.rar
+/*.tar.gz
+/*.tgz
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.swp
+*.swo

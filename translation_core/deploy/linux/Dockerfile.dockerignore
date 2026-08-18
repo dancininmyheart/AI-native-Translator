@@ -1,0 +1,14 @@
+.git
+.pytest-tmp*
+.pytest_cache
+.ruff_cache
+.validation
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.pdf
