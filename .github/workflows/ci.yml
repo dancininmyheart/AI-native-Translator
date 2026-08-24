@@ -80,7 +80,7 @@ jobs:
 
       - name: Install Node.js
         # Patched post-v7 commit rebuilding dist for GHSA-3jxr-9vmj-r5cp (#1599).
-        uses: actions/setup-node@e51e5fe84fc33b4c73ebe40526b2694712b5b858
+        uses: actions/setup-node@ae0d4ed08881f17d1511386f5be3e62356acd4a6
         with:
           node-version: 22.19.0
           cache: npm
