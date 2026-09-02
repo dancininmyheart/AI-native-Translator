@@ -130,7 +130,7 @@ export class PiSessionFactory implements SessionFactory {
           [this.config.piModelProvider]: {
             baseUrl: normalizeOpenAiBaseUrl(parsed),
             api: "openai-completions",
-            apiKey: "$OPENAI_API_KEY",
+            apiKey: "",
             compat: {
               supportsDeveloperRole: false,
               supportsReasoningEffort: false,
