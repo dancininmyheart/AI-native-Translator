@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@earendil-works/pi-coding-agent": "0.84.1",
-    "@fastify/multipart": "9.3.0",
+    "@fastify/multipart": "10.1.1",
     "bullmq": "6.0.6",
     "fastify": "5.11.2",
     "ioredis": "6.0.0",
