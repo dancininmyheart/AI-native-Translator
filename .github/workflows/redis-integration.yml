@@ -46,7 +46,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Node.js
-        uses: actions/setup-node@e51e5fe84fc33b4c73ebe40526b2694712b5b858
+        uses: actions/setup-node@101b3474143230c3562bd21f0b3c3f8254784571
         with:
           node-version: 22.19.0
           cache: npm
